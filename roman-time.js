@@ -1,6 +1,11 @@
 var hours = process.argv[2];
 var minutes = process.argv[3];
 
+/**
+ * @param {string} hours
+ * @param {string} minutes
+ * @constructor
+ */
 function TimeRomanizer(hours, minutes) {
     /**
      * @param hours
