@@ -87,7 +87,7 @@ function TimeRomanizer(hours, minutes) {
                 romanNumeral += roman[i];
             }
         }
-        if (romanNumeral == "") {
+        if (romanNumeral === "") {
             return "--";
         }
         return romanNumeral;
@@ -95,7 +95,7 @@ function TimeRomanizer(hours, minutes) {
 
     /**
      * Перевод времени в римскую нотацию
-     *  @returns {string|number, number}
+     *  @returns {string}
      */
     TimeRomanizer.prototype.romanizeTime = function () {
         if (this.__hours === "Время указано не верно" || this.__minutes === "Время указано не верно") {
@@ -135,19 +135,19 @@ function TimeRomanizer(hours, minutes) {
         var romanTime = this.romanizeTime();
         if (romanTime === "Время указано не верно") {
             return "Нечего рисовать"
-        } else {
-            var ans = "";
-            // 5 раз рисуем по строчке, так как в шрифте высота цифр - 5
-            for (var j = 0; j < 5; j++) {
-                var line = [];
-                for (var i = 0, len = romanTime.length; i < len; i++) {
-                    line.push(this.__drawRomNum(romanTime[i])[j]);
-                }
-                line = line.join("  ");
-                ans += [line, "\n"].join("");
-            }
-            return ans
         }
+        var ans = "";
+        // 5 раз рисуем по строчке, так как в шрифте высота цифр - 5
+        for (var j = 0; j < 5; j++) {
+            var line = [];
+            for (var i = 0, len = romanTime.length; i < len; i++) {
+                line.push(this.__drawRomNum(romanTime[i])[j]);
+            }
+            line = line.join("  ");
+            ans += line;
+            ans += "\n";
+        }
+        return ans
     };
 
     TimeRomanizer.prototype.isHoursValid = function () {
