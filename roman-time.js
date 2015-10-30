@@ -14,7 +14,7 @@ function TimeRomanizer(hours, minutes) {
      */
     TimeRomanizer.prototype.__validateHours = function (hours) {
         if (hours < 0 || hours > 23) {
-            return "Время указано не верно";
+            throw new RangeError("Часы указаны не верно");
         }
         return hours;
     };
@@ -25,7 +25,7 @@ function TimeRomanizer(hours, minutes) {
      */
     TimeRomanizer.prototype.__validateMinutes = function (minutes) {
         if (minutes < 0 || minutes > 59) {
-            return "Время указано не верно";
+            throw new RangeError("Минуты указаны не верно");
         }
         return minutes
     };
@@ -43,11 +43,7 @@ function TimeRomanizer(hours, minutes) {
         rom_hours: {
             "get": function () {
                 if (!this.__romHours) {
-                    if (this.__hours !== "Время указано не верно") {
-                        this.__romHours = this.__decimalToRoman(this.__hours);
-                    } else {
-                        return this.__hours
-                    }
+                    this.__romHours = this.__decimalToRoman(this.__hours);
                 }
                 return this.__romHours
             }
@@ -58,11 +54,7 @@ function TimeRomanizer(hours, minutes) {
         rom_minutes: {
             "get": function () {
                 if (!this.__romMinutes) {
-                    if (this.__minutes !== "Время указано не верно") {
-                        this.__romMinutes = this.__decimalToRoman(this.__minutes);
-                    } else {
-                        return this.__minutes
-                    }
+                    this.__romMinutes = this.__decimalToRoman(this.__minutes);
                 }
                 return this.__romMinutes
             }
@@ -111,20 +103,15 @@ function TimeRomanizer(hours, minutes) {
      * @private
      */
     TimeRomanizer.prototype.__drawRomNum = function (romNum) {
-        switch (romNum) {
-            case "I":
-                return ["###", " # ", " # ", " # ", "###"];
-            case "V":
-                return ["# #", "# #", "# #", "# #", " # "];
-            case "X":
-                return ["# #", "# #", " # ", "# #", "# #"];
-            case "L":
-                return ["#  ", "#  ", "#  ", "#  ", "###"];
-            case ":":
-                return ["   ", " # ", "   ", " # ", "   "];
-            case "-":
-                return ["   ", "###", "   ", "###", "   "];
-        }
+        var romanNumbers = {
+            'I': ["###", " # ", " # ", " # ", "###"],
+            'V': ["# #", "# #", "# #", "# #", " # "],
+            'X': ["# #", "# #", " # ", "# #", "# #"],
+            'L': ["#  ", "#  ", "#  ", "#  ", "###"],
+            ':': ["   ", " # ", "   ", " # ", "   "],
+            '-': ["   ", "###", "   ", "###", "   "]
+        };
+        return romanNumbers[romNum];
     };
 
     /**
